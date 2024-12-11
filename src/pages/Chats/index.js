@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 const { Content, Sider } = Layout;
 const { Text, Title } = Typography;
 
-const TongQuan = () => {
+const Chats = () => {
   const [users, setUsers] = useState([]); // Danh sách người dùng
   const [selectedUser, setSelectedUser] = useState(null); // Người dùng được chọn
   const [messages, setMessages] = useState([]); // Tin nhắn
@@ -210,4 +210,4 @@ const TongQuan = () => {
   );
 };
 
-export default TongQuan;
+export default Chats;

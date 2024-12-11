@@ -1,12 +1,15 @@
-import { Modal, Input, Image, Form, Row, Col, message, Button, List } from 'antd';
+import { Modal, Input, Image, Form, Row, Col, message, Button, List, Select } from 'antd';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import UploadImage from '../../components/UploadImage/UploadImage'; // Import component UploadImage
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import CreateSize from '~/components/CreateSize';
 
 const UpdateProduct = (props) => {
   const { isUpdateModalOpen, setIsUpdateModalOpen, dataUpdate, setDataUpdate } = props;
-
+  const [create, setCreateBtn] = useState(false);
+  console.log(dataUpdate);
+  const { Option } = Select;
   const [form] = Form.useForm();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -16,6 +19,11 @@ const UpdateProduct = (props) => {
   const [isBrandModalOpen, setIsBrandsModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false); // Modal sửa ảnh
 
+  const [isSizeModalOpen, setIsSizeModalOpen] = useState(false); // Quản lý mở/đóng modal
+  const [sizes, setSizes] = useState([]); // Dữ liệu Sizes hiện tại
+  const [currentSize, setCurrentSize] = useState(null); // Dữ liệu size đang chỉnh sửa
+  const [brandName, setBrandName] = useState('');
+  const [categoryName, setCategoryName] = useState('');
   useEffect(() => {
     if (dataUpdate) {
       form.setFieldsValue({
@@ -27,7 +35,10 @@ const UpdateProduct = (props) => {
         brandID: dataUpdate.brandID,
         quantity: dataUpdate.quantity,
       });
+      setBrandName(dataUpdate?.Brand?.name);
+      setCategoryName(dataUpdate?.Category?.name);
       setImageUrl(dataUpdate?.image); // Cập nhật ảnh khi có dữ liệu
+      setSizes(dataUpdate?.Sizes);
     }
   }, [dataUpdate]);
 
@@ -134,7 +145,36 @@ const UpdateProduct = (props) => {
       message.error('Xóa ảnh không thành công!');
     }
   };
+  // Hàm xóa, sửa sizes
+  const handleSaveSize = async (values) => {
+    try {
+      if (currentSize?.id) {
+        // Sửa Size
+        await axios.put(`http://localhost:9000/api/sizes/${currentSize.id}`, values);
+        message.success('Cập nhật Size thành công!');
+      }
+      handleCloseUpdateModal();
+      setIsUpdateModalOpen(false);
+      setIsSizeModalOpen(false);
+      setCurrentSize(null);
+    } catch (error) {
+      message.error('Lỗi khi lưu Size!');
+    }
+  };
 
+  const handleDeleteSize = async (sizeId) => {
+    try {
+      await axios.delete(`http://localhost:9000/api/sizes/${sizeId}`);
+      setSizes((prev) => prev.filter((size) => size.id !== sizeId)); // Xóa khỏi danh sách
+      message.success('Xóa Size thành công!');
+    } catch (error) {
+      message.error('Lỗi khi xóa Size!');
+    }
+  };
+  const handleUpdateImageName = async (imageDetail, selectedSize) => {
+    await axios.put(`http://localhost:9000/api/images/${imageDetail?.id}`, { ...imageDetail, name: selectedSize });
+    console.log('Cập nhật tên:', selectedSize, 'cho ảnh:', imageDetail?.id);
+  };
   return (
     <>
       {/* Update Product Modal */}
@@ -204,6 +244,31 @@ const UpdateProduct = (props) => {
                 </div>
               </Form.Item>
 
+              {/* <Form.Item label="Ảnh cũ">
+                <List
+                  grid={{ gutter: 16, column: 3 }}
+                  dataSource={dataUpdate?.ImgDetails || []}
+                  renderItem={(imageDetail) => (
+                    <List.Item>
+                      <div style={{ position: 'relative' }}>
+                        <Image width={100} height={100} src={imageDetail?.image} alt="Product Image" />
+                        <Button
+                          icon={<DeleteOutlined />}
+                          size="small"
+                          style={{
+                            position: 'absolute',   
+                            top: 0,
+                            right: 70,
+                            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                            borderColor: 'rgba(255, 255, 255, 0.7)',
+                          }}
+                          onClick={() => handleDeleteImage(imageDetail?.id)}
+                        />
+                      </div>
+                    </List.Item>
+                  )}
+                />
+              </Form.Item> */}
               <Form.Item label="Ảnh cũ">
                 <List
                   grid={{ gutter: 16, column: 3 }}
@@ -218,18 +283,28 @@ const UpdateProduct = (props) => {
                           style={{
                             position: 'absolute',
                             top: 0,
-                            right: 0,
+                            right: 70,
                             backgroundColor: 'rgba(255, 255, 255, 0.7)',
                             borderColor: 'rgba(255, 255, 255, 0.7)',
                           }}
                           onClick={() => handleDeleteImage(imageDetail?.id)}
                         />
+                        <Select
+                          style={{ position: 'absolute', top: 100, right: 0 }}
+                          defaultValue={imageDetail?.name}
+                          onChange={(value) => handleUpdateImageName(imageDetail, value)}
+                        >
+                          {sizes?.map((size) => (
+                            <Option key={size?.id} value={size?.size}>
+                              {size?.size}
+                            </Option>
+                          ))}
+                        </Select>
                       </div>
                     </List.Item>
                   )}
                 />
               </Form.Item>
-
               <Form.Item
                 label="Danh mục"
                 name="categoryID"
@@ -245,6 +320,9 @@ const UpdateProduct = (props) => {
               >
                 <Input readOnly addonAfter={<Button onClick={handleOpenBrandsModal}>Chọn thương hiệu</Button>} />
               </Form.Item>
+              <Button onClick={() => setIsSizeModalOpen(true)} style={{ marginTop: 16 }}>
+                Quản lý Sizes
+              </Button>
             </Col>
           </Row>
         </Form>
@@ -300,6 +378,166 @@ const UpdateProduct = (props) => {
       >
         <UploadImage url={imageUrl?.image} setUrl={handleCloseImageModal} />
       </Modal>
+      {/* Sizes Modal */}
+      <Modal
+        title="Quản lý Sizes"
+        open={isSizeModalOpen}
+        onCancel={() => {
+          setIsSizeModalOpen(false);
+          setCurrentSize(null);
+        }}
+        footer={null}
+        width={900} // Tăng chiều rộng Modal
+      >
+        <Button onClick={() => setCreateBtn(true)} className="bg-blue-500" icon={<PlusOutlined />} type="primary">
+          Thêm Sizes
+        </Button>
+        <List
+          dataSource={sizes}
+          renderItem={(size) => (
+            <List.Item
+              actions={[
+                <Button onClick={() => setCurrentSize(size)}>Sửa</Button>,
+                <Button danger onClick={() => handleDeleteSize(size.id)}>
+                  Xóa
+                </Button>,
+              ]}
+            >
+              <List.Item.Meta
+                title={<b>{`Tên Size: ${size.size}`}</b>}
+                description={
+                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <tbody>
+                      <tr>
+                        <td style={{ padding: '5px', fontWeight: 'bold' }}>Kích thước:</td>
+                        <td>{`Width: ${size.width || 'N/A'}, Height: ${size.height || 'N/A'}`}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: '5px', fontWeight: 'bold' }}>Khối lượng:</td>
+                        <td>{size.mass || 'N/A'}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: '5px', fontWeight: 'bold' }}>Số lượng tồn:</td>
+                        <td>{size.InventoryNumber || 0}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: '5px', fontWeight: 'bold' }}>Giá:</td>
+                        <td>{size.price ? `${size?.price?.toLocaleString('vi-VN')} VND` : 'N/A'}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: '5px', fontWeight: 'bold' }}>Trạng thái:</td>
+                        <td>{size.status || 'N/A'}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                }
+              />
+            </List.Item>
+          )}
+        />
+
+        {currentSize !== null && (
+          <Form
+            layout="vertical"
+            initialValues={
+              currentSize || { size: '', width: '', height: '', mass: '', InventoryNumber: '', price: '', status: '' }
+            }
+            onFinish={handleSaveSize}
+          >
+            <Row gutter={[24, 24]}>
+              <Col span={8}>
+                <Form.Item
+                  label="Tên Size"
+                  name="size"
+                  rules={[{ required: true, message: 'Vui lòng nhập tên size!' }]}
+                >
+                  <Input placeholder="Nhập tên size" />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  label="Chiều rộng (Width)"
+                  name="width"
+                  rules={[{ required: true, message: 'Vui lòng nhập chiều rộng!' }]}
+                >
+                  <Input type="number" placeholder="Nhập chiều rộng" />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  label="Chiều cao (Height)"
+                  name="height"
+                  rules={[{ required: true, message: 'Vui lòng nhập chiều cao!' }]}
+                >
+                  <Input type="number" placeholder="Nhập chiều cao" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={[24, 24]}>
+              <Col span={8}>
+                <Form.Item
+                  label="Khối lượng (Mass)"
+                  name="mass"
+                  rules={[{ required: true, message: 'Vui lòng nhập khối lượng!' }]}
+                >
+                  <Input type="number" placeholder="Nhập khối lượng" />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  label="Số lượng tồn (Inventory)"
+                  name="InventoryNumber"
+                  rules={[{ required: true, message: 'Vui lòng nhập số lượng!' }]}
+                >
+                  <Input type="number" placeholder="Nhập số lượng tồn" />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item label="Giá" name="price" rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}>
+                  <Input type="number" placeholder="Nhập giá" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={[24, 24]}>
+              <Col span={24}>
+                <Form.Item
+                  label="Trạng thái"
+                  name="status"
+                  rules={[{ required: true, message: 'Vui lòng nhập trạng thái!' }]}
+                >
+                  <Input placeholder="Nhập trạng thái (VD: Còn hàng, Hết hàng)" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={10}>
+                <Button
+                  block
+                  type="primary"
+                  style={{}}
+                  onClick={() => {
+                    setCurrentSize(null); // Reset dữ liệu
+                  }}
+                >
+                  Reset
+                </Button>
+              </Col>
+              <Col span={10}>
+                <Button type="primary" htmlType="submit" style={{ marginLeft: 145 }} block>
+                  {currentSize?.id ? 'Cập nhật' : 'Thêm mới'}
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        )}
+      </Modal>
+      <CreateSize
+        isCreateModalOpen={create}
+        setIsCreateModalOpen={setCreateBtn}
+        setIsValueSize={dataUpdate?.id}
+        setClose={setIsUpdateModalOpen}
+        setIsSizeModalOpen={setIsSizeModalOpen}
+      />
     </>
   );
 };

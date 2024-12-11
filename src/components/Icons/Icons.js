@@ -177,6 +177,7 @@ export const LiveActiveIcon = ({ width = '3.2rem', height = '3.2rem', className 
     ></path>
   </svg>
 );
+
 export const ProductIcon = ({ width = '3.2rem', height = '3.2rem', className }) => (
   <svg
     className={className}
@@ -255,6 +256,7 @@ export const ProductIcon = ({ width = '3.2rem', height = '3.2rem', className }) 
     </g>
   </svg>
 );
+
 export const ProductActiveIcon = ({ width = '3.2rem', height = '3.2rem', className }) => (
   <svg
     className={className}
@@ -556,5 +558,140 @@ export const PaymentActiveIcon = ({ width = '2.6rem', height = '2.6rem', classNa
         <path d="M40.228,21.494L30,11.267V8c0-2.2-1.8-4-4-4H10C7.8,4,6,5.8,6,8v23.955c0,2.2,1.8,4,4,4h3.992l0.121,0.799 c0.621,4.105,4.012,7.201,7.888,7.201h20v-17C42,23.483,40.656,21.907,40.228,21.494z M26,9.185c-0.198-0.019-0.398-0.03-0.6-0.03 c-1.605,0-3.112,0.623-4.24,1.751c-1.132,1.125-1.758,2.629-1.76,4.234c-0.003,1.611,0.621,3.123,1.756,4.259L26,24.243v7.712h-7V8 h7V9.185z M10,8h3v23.955h-3V8z M38,39.955H22c-1.915,0-3.605-1.633-3.933-3.799l-0.03-0.201H26c2.2,0,4-1.8,4-4v-3.712l2.12,2.12 l2.829-2.828l-4.663-4.663L25,17.587l-1.016-1.016c-0.378-0.378-0.585-0.884-0.584-1.424c0.001-0.534,0.207-1.033,0.584-1.408 c0.423-0.423,1.024-0.6,1.604-0.548c0.455,0.04,0.897,0.217,1.228,0.548L31,17.923l6.416,6.416l-0.072-0.022l0.109,0.072 C37.584,24.586,38,25.337,38,26.955V39.955z" />{' '}
       </g>{' '}
     </g>
+  </svg>
+);
+export const ChatsIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
+  <svg
+    className={className}
+    width={width}
+    height={height}
+    fill="currentColor"
+    viewBox="0 0 48 48"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+    <g id="SVGRepo_iconCarrier">
+      <path d="M0 0h48v48H0z" fill="none" />
+      <path d="M24 4C13.506 4 5 10.745 5 19c0 4.496 2.254 8.547 5.846 11.44V40l6.785-3.781C19.526 37.146 21.73 37.5 24 37.5c10.494 0 19-6.745 19-15S34.494 4 24 4zm0 28.5c-2.177 0-4.312-.316-6.316-.938L12.5 34v-4.875C9.264 26.875 7 23.256 7 19 7 11.82 14.075 6 24 6s17 5.82 17 13c0 7.18-7.075 13-17 13z" />
+    </g>
+  </svg>
+);
+export const ChatsActiveIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
+  <svg
+    className={className}
+    width={width}
+    height={height}
+    fill="currentColor"
+    viewBox="0 0 48 48"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+    <g id="SVGRepo_iconCarrier">
+      <path d="M0 0h48v48H0z" fill="none" />
+      <path d="M24 4C13.506 4 5 10.745 5 19c0 4.496 2.254 8.547 5.846 11.44V40l6.785-3.781C19.526 37.146 21.73 37.5 24 37.5c10.494 0 19-6.745 19-15S34.494 4 24 4zm0 28.5c-2.177 0-4.312-.316-6.316-.938L12.5 34v-4.875C9.264 26.875 7 23.256 7 19 7 11.82 14.075 6 24 6s17 5.82 17 13c0 7.18-7.075 13-17 13z" />
+      <circle cx="30" cy="18" r="2" fill="#FF5722" />
+      <circle cx="24" cy="18" r="2" fill="#FF5722" />
+      <circle cx="18" cy="18" r="2" fill="#FF5722" />
+    </g>
+  </svg>
+);
+export const BlogIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
+  <svg
+    className={className}
+    width={width}
+    height={height}
+    fill="currentColor"
+    viewBox="0 0 48 48"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+    <g id="SVGRepo_iconCarrier">
+      <path d="M6 8a2 2 0 0 1 2-2h32a2 2 0 0 1 2 2v32a2 2 0 0 1-2 2H10l-4 4V8Zm6 6v2h24v-2H12Zm0 10v2h18v-2H12Zm0 10v2h12v-2H12Z" />
+    </g>
+  </svg>
+);
+export const BlogActiveIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
+  <svg
+    className={className}
+    width={width}
+    height={height}
+    fill="currentColor"
+    viewBox="0 0 48 48"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+    <g id="SVGRepo_iconCarrier">
+      <path d="M6 8a2 2 0 0 1 2-2h32a2 2 0 0 1 2 2v32a2 2 0 0 1-2 2H10l-4 4V8Zm6 6v2h24v-2H12Zm0 10v2h18v-2H12Zm0 10v2h12v-2H12Z" />
+      <circle cx="36" cy="14" r="3" fill="#FF5722" />
+    </g>
+  </svg>
+);
+export const MaintenanceIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
+  <svg
+    className={className}
+    width={width}
+    height={height}
+    fill="currentColor"
+    viewBox="0 0 48 48"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="24" cy="24" r="20" fill="#D9D9D9" />
+    <path
+      d="M18 18l12 12m0-12L18 30M22.5 11l-1.5 5M25.5 37l1.5-5M37 22.5l-5 1.5M11 25.5l5-1.5"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+export const MaintenanceActiveIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
+  <svg
+    className={className}
+    width={width}
+    height={height}
+    fill="#FFD700" // Màu vàng sáng
+    viewBox="0 0 48 48"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="24" cy="24" r="20" fill="#FFD700" />
+    <path
+      d="M18 18l12 12m0-12L18 30M22.5 11l-1.5 5M25.5 37l1.5-5M37 22.5l-5 1.5M11 25.5l5-1.5"
+      stroke="#fff"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+export const PeriodicMaintenanceIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
+  <svg
+    className={className}
+    width={width}
+    height={height}
+    fill="currentColor"
+    viewBox="0 0 48 48"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="24" cy="24" r="20" fill="#D9D9D9" />
+    <path d="M24 16v8h8m-8 8h-8m8-8l6 6m0-12l-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
+export const PeriodicMaintenanceActiveIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
+  <svg
+    className={className}
+    width={width}
+    height={height}
+    fill="#FFD700" // Màu vàng sáng
+    viewBox="0 0 48 48"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="24" cy="24" r="20" fill="#FFD700" />
+    <path d="M24 16v8h8m-8 8h-8m8-8l6 6m0-12l-6 6" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );

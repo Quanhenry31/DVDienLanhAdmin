@@ -8,7 +8,7 @@ import UpdateProduct from './Edit';
 import SearchProduct from './Search';
 import { useDebounce } from '~/hooks';
 
-const SanPham = () => {
+const ServicesDay = () => {
   const [listOfPosts, setListOfPosts] = useState([]);
   const [create, setCreateBtn] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -17,11 +17,11 @@ const SanPham = () => {
   const [searchValue, setSearchValue] = useState('');
   const debounceValue = useDebounce(searchValue, 1000);
   // &pageSize=2
-  const handleSearch = () => {
-    axios
-      .get('http://localhost:9000/api/products?sort=ASC&page=1&name=' + debounceValue)
-      .then((response) => setListOfPosts(response.data.rows));
-  };
+  // const handleSearch = () => {
+  //   axios
+  //     .get('http://localhost:9000/api/products?sort=ASC&page=1&name=' + debounceValue)
+  //     .then((response) => setListOfPosts(response.data.rows));
+  // };
 
   const columns = [
     {
@@ -30,35 +30,19 @@ const SanPham = () => {
       key: 'id',
     },
     {
-      title: 'Tên sản phẩm',
+      title: 'Tên dịch vụ',
       dataIndex: 'name',
       key: 'name',
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Thương hiệu',
-      dataIndex: ['Brand', 'name'], // Truy cập nested object
-      key: 'brand',
-    },
-    {
-      title: 'Danh mục',
-      dataIndex: ['Category', 'name'], // Truy cập nested object
-      key: 'category',
-    },
-
-    {
-      title: 'Số lượng',
-      dataIndex: 'quantity',
-      key: 'quantity',
-    },
-    {
       title: 'Ảnh',
-      dataIndex: 'ImgDetails',
+      dataIndex: 'image',
       key: 'image',
       render: (images) =>
         images && images.length > 0 ? (
           <img
-            src={images[0].image} // Hiển thị ảnh đầu tiên
+            src={images} // Hiển thị ảnh đầu tiên
             alt="Product"
             style={{ width: '70px', height: '70px' }}
           />
@@ -99,11 +83,9 @@ const SanPham = () => {
   ];
 
   const handleDeleteProduct = async (data) => {
-    console.log(data.id);
     if (data.id) {
       try {
-        await axios.delete('http://localhost:9000/api/images/deleteDetailID/' + data.id);
-        axios.delete('http://localhost:9000/api/products/' + data.id);
+        await axios.delete('http://localhost:9000/api/servicesOrder/' + data.id);
         setIsdelete(true);
       } catch (error) {
         console.log(error);
@@ -126,12 +108,12 @@ const SanPham = () => {
     );
   };
 
-  useEffect(() => {
-    handleSearch();
-  }, [debounceValue]);
+  // useEffect(() => {
+  //   handleSearch();
+  // }, [debounceValue]);
 
   useEffect(() => {
-    axios.get('http://localhost:9000/api/products/all').then((response) => {
+    axios.get('http://localhost:9000/api/servicesOrder/all').then((response) => {
       setListOfPosts(response.data.data);
       setIsdelete(false);
     });
@@ -151,4 +133,4 @@ const SanPham = () => {
   );
 };
 
-export default SanPham;
+export default ServicesDay;

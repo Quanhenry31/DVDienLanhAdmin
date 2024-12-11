@@ -7,20 +7,24 @@ import Menu, { MenuItem } from './Menu';
 import {
   HomeIcon,
   HomeActiveIcon,
-  UserGroupIcon,
-  UserGroupActiveIcon,
   LiveIcon,
   LiveActiveIcon,
   ProductIcon,
   ProductActiveIcon,
   BillIcon,
   BillActiveIcon,
-  BillDetailIcon,
-  BillDetailActiveIcon,
   UserIcon,
   UserActiveIcon,
   PaymentIcon,
   PaymentActiveIcon,
+  ChatsIcon,
+  ChatsActiveIcon,
+  BlogIcon,
+  BlogActiveIcon,
+  MaintenanceIcon,
+  MaintenanceActiveIcon,
+  PeriodicMaintenanceIcon,
+  PeriodicMaintenanceActiveIcon,
 } from '~/components/Icons';
 
 const cx = classNames.bind(styles);
@@ -67,7 +71,20 @@ function Sidebar() {
           icon={<PaymentIcon />}
           activeIcon={<PaymentActiveIcon />}
         /> */}
-        <MenuItem title="Tổng quan" to={config.routes.tongQuan} icon={<LiveIcon />} activeIcon={<LiveActiveIcon />} />
+        <MenuItem title="Chats" to={config.routes.chats} icon={<ChatsIcon />} activeIcon={<ChatsActiveIcon />} />
+        <MenuItem title="Blog" to={config.routes.blog} icon={<BlogIcon />} activeIcon={<BlogActiveIcon />} />
+        <MenuItem
+          title="ServicesU"
+          to={config.routes.servicesUsually}
+          icon={<MaintenanceIcon />}
+          activeIcon={<MaintenanceActiveIcon />}
+        />
+        <MenuItem
+          title="ServicesDay"
+          to={config.routes.servicesDay}
+          icon={<PeriodicMaintenanceIcon />}
+          activeIcon={<PeriodicMaintenanceActiveIcon />}
+        />
       </Menu>
     </aside>
   );

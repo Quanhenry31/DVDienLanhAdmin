@@ -74,6 +74,7 @@ const Payment = () => {
     {
       title: 'Price',
       dataIndex: 'total_price',
+      render: (text) => text.toLocaleString('vi-VN'),
     },
     {
       title: 'Time',
@@ -156,11 +157,11 @@ const Payment = () => {
         <div>
           <SearchProduct value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
         </div>
-        <div>
+        {/* <div>
           <Button onClick={() => setCreateBtn(true)} className="bg-blue-500" icon={<PlusOutlined />} type="primary">
             Thêm mới
           </Button>
-        </div>
+        </div> */}
       </div>
     );
   };

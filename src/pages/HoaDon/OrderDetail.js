@@ -88,9 +88,9 @@ const OrderDetailOrder = ({
                       </td>
                       <td>{detail.category}</td>
                       <td>{detail.brand}</td>
-                      <td>{detail.unitPrice} VND</td>
+                      <td>{detail.unitPrice.toLocaleString('vi-VN')} VND</td>
                       <td>{detail.quantity}</td>
-                      <td>{detail.allMoney} VND</td>
+                      <td>{detail.allMoney.toLocaleString('vi-VN')} VND</td>
                     </tr>
                   ))}
                 </tbody>

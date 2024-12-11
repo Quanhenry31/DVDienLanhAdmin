@@ -155,16 +155,16 @@ function Invoice({ isInvoiceDetailModalOpen, setIsInvoiceDetailModalOpen, dataIn
                           </td>
                           <td>{detail.category}</td>
                           <td>{detail.brand}</td>
-                          <td>{detail.unitPrice} VND</td>
+                          <td>{detail?.unitPrice?.toLocaleString('vi-VN')} VND</td>
                           <td>{detail.quantity}</td>
-                          <td className="text-end">{detail.allMoney} VND</td>
+                          <td className="text-end">{detail?.allMoney?.toLocaleString('vi-VN')} VND</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                   <div className="invoice-body-bottom">
                     <div className="info-item text-end">
-                      <span className="text-bold">Total:</span> {invoiceData.amount} VND
+                      <span className="text-bold">Total:</span> {invoiceData?.amount?.toLocaleString('vi-VN')} VND
                     </div>
                   </div>
                 </div>

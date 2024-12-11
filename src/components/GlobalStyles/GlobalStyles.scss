@@ -1,5 +1,7 @@
 @import 'normalize.css';
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
   --primary: #fe2c55;
   --black: #000;
